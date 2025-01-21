@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCKIO Interface Design</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #394867;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .container {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            color: #394867;
+        }
+
+        .card p {
+            margin: 10px 0;
+            color: #212A3E;
+            font-weight: bold;
+        }
+
+        .card button {
+            background-color: #394867;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .card button:hover {
+            background-color: #212A3E;
+        }
+
+        .cart {
+            margin: 20px;
+            background: #F1F6F9;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart h2 {
+            color: #394867;
+        }
+
+        .cart p {
+            color: #212A3E;
+            font-weight: bold;
+        }
+
+        .checkout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .checkout button {
+            background-color: #394867;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checkout button:hover {
+            background-color: #212A3E;
+        }
+
+        footer {
+            background-color: #394867;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .checkout {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        SOCKIO - San Sebastian College Recoletos De Cavite
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h3>Shanghai Rice Meal</h3>
+            <p>₱50</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <h3>Spaghetti</h3>
+            <p>₱30</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <h3>Sinigang Rice Meal</h3>
+            <p>₱55</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <h3>Fried Chicken Rice Meal</h3>
+            <p>₱65</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <h3>C2 Drink</h3>
+            <p>₱25</p>
+            <button>Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <h3>Water Bottle</h3>
+            <p>₱15</p>
+            <button>Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="cart">
+        <h2>Cart Summary</h2>
+        <p>Total Items: 0</p>
+        <p>Total Price: ₱0</p>
+        <div class="checkout">
+            <button>Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <footer>
+        © 2025 SOCKIO - All Rights Reserved
+    </footer>
+</body>
+</html>

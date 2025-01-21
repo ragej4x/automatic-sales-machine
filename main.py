@@ -10,27 +10,27 @@ pygame.init()
 # Adjust constants for a more compact design
 WINDOW_WIDTH, WINDOW_HEIGHT = 1024, 600
 BACKGROUND_COLOR = (241, 246, 249)
-HEADER_COLOR = (57, 72, 103)
+HEADER_COLOR = (255, 255, 255)
 TEXT_COLOR = (10, 10, 10)
 BUTTON_COLOR = (10, 10, 10)
 BUTTON_HOVER_COLOR = (200, 200, 200)
-KEYBOARD_COLOR = (30, 30, 30)  # Dark background for keyboard
-KEY_TEXT_COLOR = (30, 30, 30)  # Light text for keyboard
+KEYBOARD_COLOR = (30, 30, 30) 
+KEY_TEXT_COLOR = (30, 30, 30) 
 POPUP_COLOR = (255, 255, 255)
 banner = pygame.image.load("banner.png")
-# Set up the display with new size
+
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("SOCKIO - San Sebastian College Recoletos De Cavite")
 
 # Adjust fonts for compact UI
-font = pygame.font.SysFont("Arial", 16)
+font = pygame.font.Font("poppins-light.ttf", 12)
 header_font = pygame.font.SysFont("Arial", 16)
 search_font = pygame.font.SysFont("Arial", 14)
 
 class SockioApp:
     def __init__(self):
         # Initialize categories for product filtering
-        self.categories = ["All Meals", "Rice Meals", "Drinks"]
+        self.categories = ["All Meals", "Rice Meals", "Biscuits", "Drinks"]
 
         self.search_active = False
         self.search_text = ""
@@ -69,7 +69,6 @@ class SockioApp:
             return pygame.Surface(size)  # Return a placeholder surface if loading fails
 
     def draw_scroll_bar(self):
-        """Draw the scroll bar on the right side."""
         total_height = len(self.filtered_products) * 220  # Total content height
         visible_area = WINDOW_HEIGHT - 80  # Visible window area for products
 
@@ -166,12 +165,14 @@ class SockioApp:
 
                             elif key == "Delete":
                                 self.search_text = self.search_text[:-1]
+                                
                             elif key == "Space":
                                 self.search_text += " "
                             else:
                                 self.search_text += key
                     else:
                         self.mouse_pressed = False
+
 
     def white_pannel(self):
         pygame.draw.rect(screen, (230, 230, 230), (180, 50, 829, 80))
@@ -227,6 +228,10 @@ class SockioApp:
             self.filtered_products = [
                 product for product in self.products if "Drink" in product["name"] or "Water" in product["name"]
             ]
+        elif self.selected_category == "Biscuits":
+            self.filtered_products = [
+                product for product in self.products if "Biscuit" in product["name"]
+            ]
 
 
     def render_cart_summary(self):
@@ -252,35 +257,37 @@ class SockioApp:
 
 
     def create_side_panel(self):
-            side_panel_width = 180
+            side_panel_width = 120
             pygame.draw.rect(screen, HEADER_COLOR, (0, 80, side_panel_width, WINDOW_HEIGHT - 80))
 
-            category_title = font.render("Meal Categories", True, (255, 255, 255))
-            screen.blit(category_title, (20, 100))
+            #category_title = font.render("Categories", True, (255, 255, 255))
+            #screen.blit(category_title, (10, 100))
 
-            button_y = 130
+            button_y = 120
             for category in self.categories:
-                category_button_rect = pygame.Rect(20, button_y, side_panel_width - 40, 30)
+                category_button_rect = pygame.Rect(30, button_y, side_panel_width - 60, 60)
                 pygame.draw.rect(screen, BUTTON_COLOR, category_button_rect,1, border_radius=5)
                 category_button_text = font.render(category, True, TEXT_COLOR)
-                screen.blit(category_button_text, (category_button_rect.x + 10, category_button_rect.y + 5))
+                screen.blit(category_button_text, (category_button_rect.x -1, category_button_rect.y + 5))
 
+                image = self.load_image(f"{category.lower()}.png", (60, 60 ))
+                screen.blit(image, (category_button_rect.x , button_y ))
                 if category_button_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.selected_category = category
                     self.filter_by_category()
 
-                button_y += 40
+                button_y += 80
 
     def create_search_bar(self):
-        search_rect = pygame.Rect(WINDOW_WIDTH - 350, 90, 280, 30)
-        pygame.draw.rect(screen, (255, 255, 255), search_rect, border_radius=5)
+        search_rect = pygame.Rect(WINDOW_WIDTH - 322, 90, 280, 30)
+        pygame.draw.rect(screen, (255, 255, 255), search_rect, border_radius=100)
         search_text_surface = search_font.render(self.search_text, True, TEXT_COLOR)
         screen.blit(search_text_surface, (search_rect.x + 10, search_rect.y + 5))
 
-        search_button_rect = pygame.Rect(WINDOW_WIDTH - 110, 90, 80, 30)
-        pygame.draw.rect(screen, BUTTON_COLOR, search_button_rect, border_radius=5)
+        search_button_rect = pygame.Rect(WINDOW_WIDTH - 120, 90, 80, 30)
+        pygame.draw.rect(screen, (255, 255, 255), search_button_rect,1,border_radius=100)
         search_button_text = font.render("Search", True, TEXT_COLOR)
-        screen.blit(search_button_text, (search_button_rect.x + 10, search_button_rect.y + 5))
+        screen.blit(search_button_text, (search_button_rect.x + 15, search_button_rect.y + 5))
 
         # Open the keyboard when the search bar is clicked
         if search_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
@@ -318,9 +325,9 @@ class SockioApp:
 
             # Add to Cart button at the bottom
             add_button_rect = pygame.Rect(start_x + 10, start_y + 170, 120, 30)
-            pygame.draw.rect(screen, BUTTON_COLOR, add_button_rect, border_radius=5)
+            pygame.draw.rect(screen, BUTTON_COLOR, add_button_rect,1, border_radius=5)
             add_button_text = font.render("Add to Cart", True, TEXT_COLOR)
-            screen.blit(add_button_text, (add_button_rect.x + 5, add_button_rect.y + 5))
+            screen.blit(add_button_text, (add_button_rect.x + 25, add_button_rect.y + 5))
 
             if not self.keyboard_triggered and add_button_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                 self.selected_product = product
@@ -361,9 +368,9 @@ class SockioApp:
         done_button_rect = pygame.Rect(minus_button_rect.x + button_width + button_spacing, popup_rect.y + popup_height - 80, button_width * 2 + button_spacing, button_height)
 
         # Draw the buttons
-        pygame.draw.rect(screen, BUTTON_COLOR, plus_button_rect, border_radius=5)
-        pygame.draw.rect(screen, BUTTON_COLOR, minus_button_rect, border_radius=5)
-        pygame.draw.rect(screen, BUTTON_COLOR, done_button_rect, border_radius=5)
+        pygame.draw.rect(screen, BUTTON_COLOR, plus_button_rect,1, border_radius=5)
+        pygame.draw.rect(screen, BUTTON_COLOR, minus_button_rect,1, border_radius=5)
+        pygame.draw.rect(screen, BUTTON_COLOR, done_button_rect,1, border_radius=5)
 
         # Render the +, -, and Done text on the buttons
         plus_button_text = font.render("+", True, TEXT_COLOR)
